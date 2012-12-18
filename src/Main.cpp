@@ -17,7 +17,7 @@ int main() {
     //Asigno las imagenes a la clase texture
     for (int i = 0; i < 7; i++) {
         std::stringstream concat;
-        std::string cadena = "res\\sprite\\derecha\\derecha";
+        std::string cadena = "res/sprite/derecha/derecha";
         concat << cadena << i + 1 << ".png";
         cadena = concat.str();
         std::cout << cadena << std::endl;
@@ -26,12 +26,12 @@ int main() {
         }
         soldado[i].setSmooth(true);
     }
-    if(!sold.loadFromFile("res\\sprite\\raptor.gif")){
+    if(!sold.loadFromFile("res/sprite/raptor.gif")){
         return EXIT_FAILURE;
     }
 
     sf::Font font;
-    if (!font.loadFromFile("res\\font\\arial.ttf")){
+    if (!font.loadFromFile("res/font/arial.ttf")){
         return EXIT_FAILURE;
     }
     sf::Text text("U MAD BECAUSE I WIN, LOLOLOLO!", font, 50);
@@ -49,7 +49,7 @@ int main() {
     sf::Sprite spr_sol(sold,r1);
     // Load a music to play
     sf::Music music;
-    if (!music.openFromFile("res\\music\\sonic.ogg")) {
+    if (!music.openFromFile("res/music/sonic.ogg")) {
         return EXIT_FAILURE;
     }
 
