@@ -6,7 +6,7 @@
 int main() {
     // Create the main window
     sf::RenderWindow window(sf::VideoMode(800, 600), "SFML window");
-    int vel = 4;
+    int vel = 2;
     int num = 0;
     int cont = 0;
     sf::Texture soldado[7];
@@ -26,12 +26,12 @@ int main() {
         }
         soldado[i].setSmooth(true);
     }
-    if(!sold.loadFromFile("res/sprite/raptor.gif")){
+    if(!sold.loadFromFile("res/sprite/raptor.gif")) {
         return EXIT_FAILURE;
     }
 
     sf::Font font;
-    if (!font.loadFromFile("res/font/arial.ttf")){
+    if (!font.loadFromFile("res/font/arial.ttf")) {
         return EXIT_FAILURE;
     }
     sf::Text text("U MAD BECAUSE I WIN, LOLOLOLO!", font, 50);
@@ -45,7 +45,7 @@ int main() {
         spr_solda[i].setPosition(0, 553);
         pos_sol[i] = spr_solda[i].getPosition();
     }
-    sf::IntRect r1(0, 885, 34, 47);
+    sf::IntRect r1(0, 883, 34, 48);
     sf::Sprite spr_sol(sold,r1);
     // Load a music to play
     sf::Music music;
@@ -54,7 +54,7 @@ int main() {
     }
 
     // Play the music
-    music.play();
+    //music.play();
 
     // Start the game loop
     while (window.isOpen()) {
@@ -104,6 +104,26 @@ int main() {
             } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
                 std::cout << "Abajo" << std::endl;
             }
+            //Here start the other soldat
+            else if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+                r1.width = 41;
+                spr_sol.move(vel,0);
+                if(r1.left == 40*2){
+                    r1.width = 43;
+                }
+                r1.top = 1;
+                r1.left += r1.width;
+                if(r1.left > r1.width * 7) {
+                    r1.left = 0;
+                }
+            } else {
+                r1.width = 34;
+                r1.top = 883;
+                r1.left += r1.width;
+                if(r1.left > r1.width * 2) {
+                    r1.left = 0;
+                }
+            }
         }
         text.setRotation(cont);
         text.setOrigin(400,25);
@@ -111,11 +131,6 @@ int main() {
         // Clear screen
         window.clear();
         window.draw(text);
-        r1.left = r1.left + 34;
-        if(r1.left > 96){
-            r1.left = 0;
-        }
-        std::cout << r1.left << std::endl;
         spr_sol.setTextureRect(r1);
         window.draw(spr_sol);
         // Draw the sprite

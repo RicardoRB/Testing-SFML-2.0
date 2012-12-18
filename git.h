@@ -35,7 +35,7 @@ syn(){
 	echo "Introduce el nombre del commit"
 	read com
 	git add .
-	git commit -m $com
+	git commit -m "$com"
 	echo "El proyecto se ha guardado localmente"
 	echo "Quieres guardarlo en Github? 1-yes 2-no"
 	read opc
@@ -48,14 +48,16 @@ syn(){
 		*) echo "No se ha guardado en Github";;
 	esac
 }
-
-echo "Bienvenido al script para git"
-echo "Recuerda que todas las opciones se haran dentro de la carpeta"
-echo "que tengas el script"
+echo "--------------------------------------------------------------|"
+echo "|Bienvenido al script para git"
+echo "|Recuerda que todas las opciones se haran dentro de la carpeta|"
+echo "|que tengas el script"
+echo "--------------------------------------------------------------|"
 op=0
 #Dara vueltas hasta que la opcion sea mayor a 5
 while [ $op -le 5 ]
 do
+	echo "----------------------------------"
 	echo "Elige una opcion"
 	echo "1. Registrarse"
 	echo "2. Clonar"
