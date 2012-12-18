@@ -40,7 +40,11 @@ syn(){
 	echo "Quieres guardarlo en Github? 1-yes 2-no"
 	read opc
 	case $opc in
-		1) github;;
+		1) echo "Pon la ruta del repositorio"
+			read repo
+			git remote add origin $repo
+			git push origin master
+			echo "El proyecto se ha guardado en Github";;
 		*) echo "No se ha guardado en Github";;
 	esac
 }
