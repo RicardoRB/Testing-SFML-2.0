@@ -11,6 +11,7 @@ int main() {
     int cont = 0;
     sf::Texture soldado[7];
     bool derecha = false;
+    bool salto = false;
     sf::Texture sold;
     sold.setSmooth(true);
     // Load a sprite to display
@@ -47,6 +48,7 @@ int main() {
     }
     sf::IntRect r1(0, 883, 34, 48);
     sf::Sprite spr_sol(sold,r1);
+    spr_sol.setPosition(0,400);
     // Load a music to play
     sf::Music music;
     if (!music.openFromFile("res/music/sonic.ogg")) {
@@ -62,7 +64,7 @@ int main() {
         sf::Event event;
         while (window.pollEvent(event)) {
             // Close window : exit
-            if (event.type == sf::Event::Closed) {
+            if (event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
                 window.close();
             } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
                 if(derecha == true) {
@@ -104,17 +106,48 @@ int main() {
             } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
                 std::cout << "Abajo" << std::endl;
             }
-            //Here start the other soldat
-            else if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+                //Jump
+                for(int c = 0; c < 200; c++) {
+                    spr_sol.move(0, -1.0);
+                    window.clear();
+                    window.draw(spr_sol);
+                    window.display();
+                }
+
+                for(int c = 200; c > 0; c--) {
+                    spr_sol.move(0, 1.0);
+                    window.clear();
+                    window.draw(spr_sol);
+                    window.display();
+                }
+            }
+            //Here start the other soldier
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
                 r1.width = 41;
                 spr_sol.move(vel,0);
-                if(r1.left == 40*2){
+                if(r1.left == 40*2) {
                     r1.width = 43;
                 }
                 r1.top = 1;
                 r1.left += r1.width;
                 if(r1.left > r1.width * 7) {
                     r1.left = 0;
+                }
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+                    for(int c = 0; c < 240; c++) {
+                        spr_sol.move(vel, -1.0);
+                        window.clear();
+                        window.draw(spr_sol);
+                        window.display();
+                    }
+
+                    for(int c = 240; c > 0; c--) {
+                        spr_sol.move(vel, 1.0);
+                        window.clear();
+                        window.draw(spr_sol);
+                        window.display();
+                    }
                 }
             } else {
                 r1.width = 34;
