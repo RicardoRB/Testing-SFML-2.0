@@ -31,7 +31,7 @@ gihub(){
 	echo "El proyecto se ha guardado en Github"
 }
 
-syn(){
+save(){
 	echo "Introduce el nombre del commit"
 	read com
 	git add .
@@ -48,6 +48,12 @@ syn(){
 		*) echo "No se ha guardado en Github";;
 	esac
 }
+
+syn(){
+	echo "Pon la ruta del repositorio a sincronizar"
+	read repo
+	git pull $repo
+}
 echo "--------------------------------------------------------------|"
 echo "|Bienvenido al script para git"
 echo "|Recuerda que todas las opciones se haran dentro de la carpeta|"
@@ -61,13 +67,15 @@ do
 	echo "Elige una opcion"
 	echo "1. Registrarse"
 	echo "2. Clonar"
-	echo "3. Sincronizar"
+	echo "3. Guardar el trabajo de forma local/github"
+	echo "4. Sincronizar el trabajo desde github"
 	echo "6. Salir"
 	read op
 	case $op in
 		1) logeo;;
 		2) clon;;
-		3) syn;;
+		3) save;;
+		4) syn;;
 		*) echo "Adios";;
 	esac
 done
