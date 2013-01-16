@@ -3,7 +3,8 @@
 #include <iostream>
 #include <sstream>
 
-int main() {
+int main()
+{
     // Create the main window
     sf::RenderWindow window(sf::VideoMode(800, 600), "SFML window");
     int cont = 0;
@@ -19,12 +20,14 @@ int main() {
     sold.setSmooth(true);
 
     // Load a sprite to display
-    if(!sold.loadFromFile("res/sprite/raptor.gif")) {
+    if(!sold.loadFromFile("res/sprite/raptor.gif"))
+    {
         return EXIT_FAILURE;
     }
 
     sf::Font font;
-    if (!font.loadFromFile("res/font/arial.ttf")) {
+    if (!font.loadFromFile("res/font/arial.ttf"))
+    {
         return EXIT_FAILURE;
     }
     text.setString("U MAD BECAUSE I WIN, LOLOLOLO!");
@@ -44,77 +47,105 @@ int main() {
 
     // Load a music to play
     sf::Music music;
-    if (!music.openFromFile("res/music/sonic.ogg")) {
+    if (!music.openFromFile("res/music/sonic.ogg"))
+    {
         return EXIT_FAILURE;
     }
 
     // Play the music
     music.play();
+    music.setLoop(true);
 
     //If I dont put it, in linux can running more fast
     window.setFramerateLimit(500);
 
+
     // Start the game loop
-    while (window.isOpen()) {
+    while (window.isOpen())
+    {
+        bool joy = false;
+        if(sf::Joystick::isConnected(0))
+        {
+            std::cout << "The joystick has been connected, it have " << sf::Joystick::getButtonCount(0) << " of buttons" << std::endl;
+            joy = true;
+        }
+        else
+        {
+            std::cout << "Theres no joystick" << std::endl;
+            joy = false;
+        }
         // Process events
         sf::Event event;
-        while (window.pollEvent(event)) {
+        while (window.pollEvent(event))
+        {
+
             //On the begining, the soldier no are walking
             //and no are jumping
             walk = false;
             jump = false;
             // Close window : exit
-            if (event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+            if (event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+            {
                 window.close();
             }
 
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Joystick::isButtonPressed(0, 0))
+            {
                 //Jump
                 ground = false;
-                if(!endjump) {
+                if(!endjump)
+                {
                     jump = true;
                     vely = -1;
                 }
             }
 
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Joystick::getAxisPosition(0, sf::Joystick::X) == -100)
+            {
                 walk = true;
                 velx = -0.5;
                 r1.width = 41;
 
                 //Creating the feeling of moving with sprites
-                if(r1.left == 40 * 2) {
+                if(r1.left == 40 * 2)
+                {
                     r1.width = 43;
                 }
                 r1.top = 1;
                 r1.left += r1.width;
-                if(r1.left > r1.width * 7) {
+                if(r1.left > r1.width * 7)
+                {
                     r1.left = 0;
                 }
             }
 
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Joystick::getAxisPosition(0, sf::Joystick::X) == 100)
+            {
                 walk = true;
                 velx = 0.5;
 
                 //Creating the feeling of moving with sprites
                 r1.width = 41;
-                if(r1.left == 40 * 2) {
+                if(r1.left == 40 * 2)
+                {
                     r1.width = 43;
                 }
                 r1.top = 1;
                 r1.left += r1.width;
-                if(r1.left > r1.width * 7) {
+                if(r1.left > r1.width * 7)
+                {
                     r1.left = 0;
                 }
             }
         }
 
-        if(!walk) {
+        if(!walk)
+        {
             r1.width = 34;
             r1.top = 883;
             r1.left += r1.width;
-            if(r1.left > r1.width * 2) {
+            if(r1.left > r1.width * 2)
+            {
                 r1.left = 0;
             }
             velx = 0;
@@ -122,16 +153,19 @@ int main() {
 
         //The soldier cant jumping the double of its size
         //when the jumping start in 400 Y
-        if(spr_sol.getPosition().y <= ((34 * -2) + 400) - 34) {
+        if(spr_sol.getPosition().y <= ((34 * -2) + 400) - 34)
+        {
             jump = false;
             ground = false;
             endjump = true;
         }
 
-        if((!jump && !ground) || endjump) {
+        if((!jump && !ground) || endjump)
+        {
             vely = 1;
             endjump = true;
-            if(spr_sol.getPosition().y == 400) {
+            if(spr_sol.getPosition().y == 400)
+            {
                 ground = true;
                 endjump = false;
                 vely = 0;
